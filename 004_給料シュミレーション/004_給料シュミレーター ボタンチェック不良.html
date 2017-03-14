@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="jp">
+
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="css/styles.css">
+	<title>給料シュミレーター</title>
+	<style>
+	</style>
+</head>
+
+<body>
+	<div class="container">
+		<div class="container_top">
+			<p class=comment> 年俸シュミレーター</p>
+			<p>モンスターを仲間にするのは費用がかかります。<br>旅の期間いくら給料を払う必要があるか仲間にする前に計算できるようになりましょう!</p>
+		</div>
+		<div class="container_text">
+			<p>仲間予定のモンスター情報を入力してください。</p>
+			<div class="container_radio">
+			<form name="check">
+				<p class="level question">モンスターのレベルどのくらいですか？</p>
+				<input type="radio" name="level" id="level_1" class="redio"/><label for="level_1">レベル10以下</label><br>
+				<input type="radio" name="level" id="level_2" class="redio"/><label for="level_2">レベル30以下</label><br>
+				<input type="radio" name="level" id="level_3" class="redio"/><label for="level_3">レベル60以下</label><br>
+				<input type="radio" name="level" id="level_4" class="redio"/><label for="level_4">レベル80以下</label><br>
+				<input type="radio" name="level" id="level_5" class="redio"/><label for="level_5">レベル80以上</label><br>
+				<p class="level question">モンスターの系統はなんですか？</p>
+				<input type="radio" name="types" id="types_1"><label for="types_1">剣系</label><br>
+				<input type="radio" name="types" id="types_2"><label for="types_2">魔法系</label><br>
+				<input type="radio" name="types" id="types_3"><label for="types_3">野獣系</label><br>
+				<input type="radio" name="types" id="types_4"><label for="types_4">植物系</label><br>
+				<input type="radio" name="types" id="types_5"><label for="types_5">マシン系</label><br>
+			</form>
+			</div>
+			<div class="start">
+				<p class="start_date question">契約開始日はいつからですか？</p>
+				<form name="fm1">
+					<textarea name="comment" id="startComment" placeholder="yyyy-㎜-ddで入力してください"></textarea>
+				</form>
+			</div>
+			<div class="end">
+				<p class="end_date question">契約終了日はいつまでですか？</p>
+				<form name="fm2">
+					<textarea name="comment" id="endComment" placeholder="yyyy-㎜-ddで入力してください"></textarea>
+				</form>
+			</div>
+			</div>
+			<div id='btn'>計算をする！</div>
+			<p>契約日数：合計<span id='sumDate'>？？？？</span>日</p>
+			<p>給料：総額<span id='sumPay'>？？？？</span>円</p>
+
+</div>
+
+			<script src="js/main.js"></script>
+</body>
+
+</html>
