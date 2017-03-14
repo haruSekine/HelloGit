@@ -73,6 +73,5 @@
     checkForm();
     // checkedRadioBtn();
     countDate();
-
   });
 })();
