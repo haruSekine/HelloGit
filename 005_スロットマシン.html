@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="jp">
+
+<head>
+	<meta charset="utf-8">
+	<title>スロットマシン</title>
+	<style>
+		body {
+			background: #e0e0e0;
+			font-family: Arial, sans-serif;
+			text-align: center;
+			font-size: 16px;
+			margin-top: 30px;
+		}
+
+		.headding {
+			font-weight: bold;
+			font-size: 25px;
+			margin: 0 0 30px 0;
+			padding: 12px 10px;
+			border-left: 20px solid #444444;
+			background: #000000;
+			color: #FFF;
+		}
+
+		.panel {
+			display: inline-block;
+			width: 120px;
+			padding: 7px;
+			border-radius: 10px;
+			margin-top: 15px;
+			margin-bottom: 15px;
+			color: #00aaff;
+			font-weight: bold;
+			font-size: 40px;
+			line-height: 120px;
+			background: #fff;
+		}
+
+		.panel.unmatched {
+			opacity: 0.4;
+		}
+
+		.panel.matched {
+			color: #FFD700;
+			background: #FFFACD;
+		}
+
+		.panel+.panel {
+			margin-left: 15px;
+		}
+
+		.btn {
+			display: inline-block;
+			width: 120px;
+			padding: 7px;
+			border-radius: 10px;
+			margin-bottom: 15px;
+			color: #fff;
+			font-weight: bold;
+			box-shadow: 0 4px 0 #0033FF;
+			font-size: 15px;
+			line-height: 20px;
+			background: #000099;
+			cursor: pointer;
+			opacity: 0.8;
+		}
+
+		.btn+.btn {
+			margin-left: 15px;
+		}
+
+		.btn.inactive {
+			opacity: 0.5;
+		}
+		#spinButton {
+			display: inline-block;
+			width: 430px;
+			padding: 7px;
+			border-radius: 10px;
+			margin-bottom: 15px;
+			color: #fff;
+			font-weight: bold;
+			box-shadow: 0 4px 0 #99CC99;
+			font-size: 15px;
+			line-height: 20px;
+			background: #006600;
+			cursor: pointer;
+		}
+		#spinButton.inactive {
+			opacity: 0.5;
+		}
+	</style>
+</head>
+<div class="container">
+	<div class="headding">スロットマシン</div>
+	<div>お金が急遽必要な際は、カジノに行き軍資金を稼ぎましょう。</div>
+	<div>カジノには下記形式のスロットがあります。お試しください。</div>
+</div>
+<div>
+	<div class="panel" id="panel0">?</div>
+	<div class="panel" id="panel1">?</div>
+	<div class="panel" id="panel2">?</div>
+</div>
+<div>
+	<div class="btn inactive" id="btn0">STOP</div>
+	<div class="btn inactive" id="btn1">STOP</div>
+	<div class="btn inactive" id="btn2">STOP</div>
+</div>
+<div id="spinButton">SPIN</div>
+<div id="comment"></div>
+
+<body>
+	<script>
+		(function () {
+			'use strict'
+			alert("動いているか確認用");
+			var panel0 = document.getElementById('panel0');
+			var panel1 = document.getElementById('panel1');
+			var panel2 = document.getElementById('panel2');
+			var btn0 = document.getElementById('btn0');
+			var btn1 = document.getElementById('btn1');
+			var btn2 = document.getElementById('btn2');
+			var spinButton = document.getElementById('spinButton');
+			var comment = document.getElementById('comment');
+
+			var isPlay = false;
+			var timers = [];
+			var results = [];
+			var stopCount = 0;
+			var panels = ['$', '〇', '△', '■'];
+			spinButton.addEventListener('click', function () {
+				if (isPlay) return;
+				isPlay = true;
+				this.className = "inactive";
+				btn0.className = "btn";
+				btn1.className = "btn";
+				btn2.className = "btn";
+				panel0.className = 'panel';
+				panel1.className = 'panel';
+				panel2.className = 'panel';
+				runSlot(0, panel0);
+				runSlot(1, panel1);
+				runSlot(2, panel2);
+			});
+
+			function runSlot(n, panel) {
+				panel.innerHTML = panels[Math.floor(Math.random() * panels.length)];
+				timers[n] = setTimeout(function () {
+					runSlot(n, panel)
+				}, 50);
+			}
+
+			btn0.addEventListener('click', function () {
+				stopSlot(0, panel0, this);
+			});
+			btn1.addEventListener('click', function () {
+				stopSlot(1, panel1, this);
+			});
+			btn2.addEventListener('click', function () {
+				stopSlot(2, panel2, this);
+			});
+
+			function stopSlot(n, panel, btn) {
+				if (!isPlay || results[n] !== undefined) return;
+				btn.className = 'btn inactive'
+				clearTimeout(timers[n]);
+				results[n] = panel.innerHTML;
+				stopCount++;
+
+				if (stopCount === 3) {
+					checkResults();
+
+					isPlay = false;
+					timers = [];
+					stopCount = 0;
+					spinButton.className = "";
+					results = [];
+				}
+
+			};
+
+			function checkResults() {
+				if (results[0] !== results[1] && results[0] !== results[2]) {
+					panel0.className = 'panel unmatched'
+					comment.innerHTML = '残念！！！'
+				}
+				if (results[1] !== results[0] && results[1] !== results[2]) {
+					panel1.className = 'panel unmatched'
+					comment.innerHTML = '残念！！！'
+				}
+				if (results[2] !== results[0] && results[2] !== results[1]) {
+					panel2.className = 'panel unmatched'
+					comment.innerHTML = '残念！！！'
+				}
+				if (results[0] == results[1] && results[0] == results[2]) {
+					panel0.className = 'panel matched'
+					panel1.className = 'panel matched'
+					panel2.className = 'panel matched'
+					comment.innerHTML = 'やったね！！！！！'
+				}
+			}
+		})();
+	</script>
+
+</body>
+
+</html>
